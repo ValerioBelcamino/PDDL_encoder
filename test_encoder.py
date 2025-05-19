@@ -7,11 +7,18 @@ This script demonstrates how to use the PDDL encoder with the example files.
 
 import os
 import sys
+import argparse
 from pddl_encoder import PDDLEncoder
 
 def main():
-    # Create the encoder
-    encoder = PDDLEncoder()
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Test the PDDL encoder with example files.')
+    parser.add_argument('--stochastic', action='store_true', help='Use stochastic encoding')
+    parser.add_argument('--seed', type=int, help='Random seed for reproducible stochastic encoding')
+    args = parser.parse_args()
+    
+    # Create the encoder with specified options
+    encoder = PDDLEncoder(stochastic=args.stochastic, seed=args.seed)
     
     # Set up paths
     example_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'example')

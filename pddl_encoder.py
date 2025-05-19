@@ -49,12 +49,15 @@ class PDDLEncoder:
         self.encoding_map: Dict[str, str] = {}
         self.decoding_map: Dict[str, str] = {}
         self.next_id = 0
-        self.prefix = 'x'
+        self.prefix = 'x'  # Default prefix for non-stochastic mode
         self.stochastic = stochastic
+        self.max_symbols = len(string.ascii_lowercase) * 10  # Initial capacity
+        self.current_prefix_index = 0
         
-        # Set random seed if provided for reproducibility in testing
+        # Initialize random state for reproducibility
+        self.random_state = random.Random()
         if seed is not None:
-            random.seed(seed)
+            self.random_state.seed(seed)
 
     def reset(self):
         """Reset the encoder state."""
@@ -70,10 +73,19 @@ class PDDLEncoder:
 
         # Generate a new encoded name
         if self.stochastic:
-            # Generate a random suffix for stochastic encoding
-            # This ensures different encodings on each run
-            suffix = ''.join(random.choices(string.digits, k=5))
-            encoded_name = f"{self.prefix}{self.next_id}_{suffix}"
+            # Check if we need to expand capacity
+            if self.next_id >= self.max_symbols:
+                self.current_prefix_index += 1
+                self.next_id = 0
+                self.max_symbols = len(string.ascii_lowercase) * 10 * (self.current_prefix_index + 1)
+            
+            # Generate random prefix and number using instance's random state
+            prefix = self.random_state.choice(string.ascii_lowercase)
+            number = self.next_id % 10
+            if self.current_prefix_index > 0:
+                prefix = ''.join(self.random_state.choices(string.ascii_lowercase, k=self.current_prefix_index + 1))
+            
+            encoded_name = f"{prefix}{number}"
         else:
             encoded_name = f"{self.prefix}{self.next_id}"
             
