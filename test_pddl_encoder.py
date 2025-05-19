@@ -66,8 +66,9 @@ class TestPDDLEncoder(unittest.TestCase):
     def test_encode_name(self):
         """Test the encode_name method."""
         # Keywords should not be encoded
-        self.assertEqual(self.encoder.encode_name("define"), "define")
-        self.assertEqual(self.encoder.encode_name("domain"), "domain")
+        pddl_keywords = ["define", "domain", "requirements", "strips", "typing", "types", "predicates", "action", "parameters", "precondition", "effect", "not", "and", "or"]
+        for keyword in pddl_keywords:
+            self.assertEqual(self.encoder.encode_name(keyword), keyword, f"PDDL keyword {keyword} should not be encoded")
         
         # Regular names should be encoded
         self.assertEqual(self.encoder.encode_name("test-domain"), "x0")

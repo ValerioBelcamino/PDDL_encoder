@@ -17,6 +17,13 @@ from typing import Dict, List, Tuple, Set, Optional, Union
 
 # PDDL keywords that should not be encoded
 PDDL_KEYWORDS = {
+    # PDDL requirements
+    'strips', 'typing', 'negative-preconditions', 'disjunctive-preconditions',
+    'equality', 'existential-preconditions', 'universal-preconditions',
+    'quantified-preconditions', 'conditional-effects', 'fluents',
+    'numeric-fluents', 'adl', 'durative-actions', 'duration-inequalities',
+    'continuous-effects', 'derived-predicates', 'timed-initial-literals',
+    'preferences', 'constraints', 'action-costs',
     # Domain keywords
     'define', 'domain', 'requirements', 'types', 'constants', 'predicates',
     'functions', 'constraints', 'action', 'parameters', 'precondition', 'effect',
