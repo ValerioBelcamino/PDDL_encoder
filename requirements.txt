@@ -1,0 +1,5 @@
+# Core requirements
+pddl>=0.3.0  # Optional but recommended for better parsing
+
+# Development dependencies
+pytest>=7.0.0  # For testing
