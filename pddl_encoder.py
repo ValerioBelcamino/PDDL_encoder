@@ -78,24 +78,33 @@ class PDDLEncoder:
         if name.lower() in PDDL_KEYWORDS or name in self.encoding_map:
             return self.encoding_map.get(name, name)
 
-        # Generate a new encoded name
-        if self.stochastic:
-            # Check if we need to expand capacity
-            if self.next_id >= self.max_symbols:
-                self.current_prefix_index += 1
-                self.next_id = 0
-                self.max_symbols = len(string.ascii_lowercase) * 10 * (self.current_prefix_index + 1)
-            
-            # Generate random prefix and number using instance's random state
-            prefix = self.random_state.choice(string.ascii_lowercase)
-            number = self.next_id % 10
-            if self.current_prefix_index > 0:
-                prefix = ''.join(self.random_state.choices(string.ascii_lowercase, k=self.current_prefix_index + 1))
-            
-            encoded_name = f"{prefix}{number}"
-        else:
-            encoded_name = f"{self.prefix}{self.next_id}"
-            
+        while True:
+            if self.stochastic:
+                # Expand capacity if needed
+                if self.next_id >= self.max_symbols:
+                    self.current_prefix_index += 1
+                    self.next_id = 0
+                    self.max_symbols = len(string.ascii_lowercase) * 10 * (self.current_prefix_index + 1)
+
+                # Generate encoded name
+                number = self.next_id % 10
+                if self.current_prefix_index > 0:
+                    prefix = ''.join(self.random_state.choices(string.ascii_lowercase, k=self.current_prefix_index + 1))
+                else:
+                    prefix = self.random_state.choice(string.ascii_lowercase)
+
+                encoded_name = f"{prefix}{number}"
+            else:
+                encoded_name = f"{self.prefix}{self.next_id}"
+
+            # Check for collision
+            if encoded_name not in self.decoding_map:
+                break  # Unique name found
+
+            # Collision detected: try again
+            self.next_id += 1  # Important to move forward or the loop might never terminate
+
+        # Register in maps
         self.encoding_map[name] = encoded_name
         self.decoding_map[encoded_name] = name
         self.next_id += 1

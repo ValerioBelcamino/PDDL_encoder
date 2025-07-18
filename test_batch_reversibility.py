@@ -78,8 +78,14 @@ def test_reversibility(json_file, encoded_data_file, encoding_maps_file):
         decoded_problem = decode_pddl_string(encoded_entry["input"], encoding_map)
         decoded_plan = decode_pddl_string(encoded_entry["output"], encoding_map)
         
-        
-
+        # print(encoded_entry["instruction"])
+        # with open("temp.pddl", "w") as f:
+        #     f.write(decoded_domain)
+        # # print(decoded_domain)
+        # # print(original_entry["instruction"])
+        # with open("temp2.pddl", "w") as f:
+        #     f.write(original_entry["instruction"])
+        # exit()
         # Compare with the original
         domain_match = decoded_domain.strip() == original_entry["instruction"].strip()
         problem_match = decoded_problem.strip() == original_entry["input"].strip()
