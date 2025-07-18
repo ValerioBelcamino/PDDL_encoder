@@ -1,0 +1,17 @@
+blocks-world	x0
+block	x1
+table	x2
+on	x3
+x	x4
+y	x5
+clear	x6
+handempty	x7
+pickup	x8
+putdown	x9
+holding	x10
+stack	x11
+unstack	x12
+blocks-problem	x13
+blockA	x14
+blockB	x15
+blockC	x16

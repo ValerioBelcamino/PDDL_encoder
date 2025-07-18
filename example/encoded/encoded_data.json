@@ -1,0 +1,7 @@
+[
+    {
+        "instruction": "(define (domain a0)\n  (:requirements :strips :typing)\n  (:types w1 t2 - object)\n  (:predicates \n    (b3 ?v4 - w1 ?c5 - object)\n    (x6 ?v4 - object)\n    (y7)\n  )\n  \n  (:action g8\n    :parameters (?v4 - w1)\n    :precondition (and (x6 ?v4) (b3 ?v4 t2) (y7))\n    :effect (and (not (b3 ?v4 t2)) (not (x6 ?v4)) (not (y7)))\n  )\n\n  (:action s9\n    :parameters (?v4 - w1)\n    :precondition (and (c0 ?v4))\n    :effect (and (not (c0 ?v4)) (x6 ?v4) (y7) (b3 ?v4 t2))\n  )\n\n  (:action t1\n    :parameters (?v4 - w1 ?c5 - w1)\n    :precondition (and (c0 ?v4) (x6 ?c5))\n    :effect (and (not (c0 ?v4)) (not (x6 ?c5)) (x6 ?v4) (y7) (b3 ?v4 ?c5))\n  )\n\n  (:action j2\n    :parameters (?v4 - w1 ?c5 - w1)\n    :precondition (and (b3 ?v4 ?c5) (x6 ?v4) (y7))\n    :effect (and (c0 ?v4) (x6 ?c5) (not (x6 ?v4)) (not (y7)) (not (b3 ?v4 ?c5)))\n  )\n)",
+        "input": "(define (problem e3)\n  (:domain a0)\n  (:requirements :strips :typing)\n  (:objects\n    q4 n5 q6 - w1\n    t2 - t2\n  )\n  (:init\n    (x6 q4)\n    (x6 n5)\n    (x6 q6)\n    (b3 q4 t2)\n    (b3 n5 t2)\n    (b3 q6 t2)\n    (y7)\n  )\n  (:goal\n    (and\n      (b3 q4 n5)\n      (b3 n5 q6)\n      (b3 q6 t2)\n    )\n  )\n)",
+        "output": "(g8 q6)\n(s9 q6)\n(g8 n5)\n(t1 n5 q6)\n(g8 q4)\n(t1 q4 n5)"
+    }
+]

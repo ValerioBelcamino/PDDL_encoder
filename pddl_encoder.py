@@ -57,7 +57,7 @@ class PDDLEncoder:
         self.decoding_map: Dict[str, str] = {}
         self.next_id = 0
         self.prefix = 'x'  # Default prefix for non-stochastic mode
-        self.stochastic = stochastic
+        self.stochastic = True
         self.max_symbols = len(string.ascii_lowercase) * 10  # Initial capacity
         self.current_prefix_index = 0
         

@@ -1,24 +1,24 @@
-(define (problem u9)
-  (:domain u0)
+(define (problem x13)
+  (:domain x0)
   (:requirements :strips :typing)
   (:objects
-    d0 a1 x2 - d1
-    a2 - a2
+    x14 x15 x16 - x1
+    x2 - x2
   )
   (:init
-    (h6 d0)
-    (h6 a1)
-    (h6 x2)
-    (x3 d0 a2)
-    (x3 a1 a2)
-    (x3 x2 a2)
-    (e7)
+    (x6 x14)
+    (x6 x15)
+    (x6 x16)
+    (x3 x14 x2)
+    (x3 x15 x2)
+    (x3 x16 x2)
+    (x7)
   )
   (:goal
     (and
-      (x3 d0 a1)
-      (x3 a1 x2)
-      (x3 x2 a2)
+      (x3 x14 x15)
+      (x3 x15 x16)
+      (x3 x16 x2)
     )
   )
 )

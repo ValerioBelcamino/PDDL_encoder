@@ -2,7 +2,8 @@
 """
 Test script for the PDDL Encoder tool.
 
-This script demonstrates how to use the PDDL encoder with the example files.
+This script demonstrates how to use the PDDL encoder with the example files,
+including domain, problem, and plan files.
 """
 
 import os
@@ -39,6 +40,12 @@ def main():
     encoded_problem_file = os.path.join(output_dir, 'blocks_problem_encoded.pddl')
     encoder.process_pddl_file(problem_file, encoded_problem_file)
     print(f"Encoded problem file: {encoded_problem_file}")
+    
+    # Process plan file (using the same encoder to maintain consistent mapping)
+    plan_file = os.path.join(example_dir, 'blocks_plan.pddl')
+    encoded_plan_file = os.path.join(output_dir, 'blocks_plan_encoded.pddl')
+    encoder.process_pddl_file(plan_file, encoded_plan_file)
+    print(f"Encoded plan file: {encoded_plan_file}")
     
     # Save the encoding map
     map_file = os.path.join(output_dir, 'encoding_map.txt')

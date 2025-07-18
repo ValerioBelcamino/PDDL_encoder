@@ -1,0 +1,6 @@
+[
+    {
+        "entry_id": 0,
+        "encoding_map": "blocks-world\ta0\nblock\tw1\ntable\tt2\non\tb3\nx\tv4\ny\tc5\nclear\tx6\nhandempty\ty7\npickup\tg8\nputdown\ts9\nholding\tc0\nstack\tt1\nunstack\tj2\nblocks-problem\te3\nblockA\tq4\nblockB\tn5\nblockC\tq6"
+    }
+]

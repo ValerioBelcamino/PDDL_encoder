@@ -4,10 +4,11 @@ A Python tool to encode names in PDDL (Planning Domain Definition Language) file
 
 ## Features
 
-- Encodes names in both domain and problem PDDL files
+- Encodes names in domain, problem, and plan PDDL files
 - Preserves all PDDL keywords
-- Maintains consistent encoding between domain and problem files
+- Maintains consistent encoding between domain, problem, and plan files
 - Supports batch processing of multiple files
+- Supports JSON-based batch processing for domain-problem-plan tuples
 - Can save and load encoding maps for reference
 - Works with or without the PDDL parser library
 - **Reversible encoding**: Decode encoded PDDL files back to their original form
@@ -98,6 +99,34 @@ Generate different encodings each time for the same file:
 python pddl_encoder.py input.pddl output.pddl --stochastic
 ```
 
+### JSON-based Batch Processing
+
+Process multiple domain-problem-plan tuples using a JSON configuration file:
+
+```bash
+python batch_encoder.py config.json --input-dir example --output-dir example/encoded
+```
+
+Example JSON configuration file:
+```json
+[
+    {
+        "instruction": "Encode blocks world example",
+        "input": {
+            "domain": "blocks_domain.pddl",
+            "problem": "blocks_problem.pddl",
+            "plan": "blocks_plan.pddl"
+        },
+        "output": {
+            "domain": "blocks_domain_encoded.pddl",
+            "problem": "blocks_problem_encoded.pddl",
+            "plan": "blocks_plan_encoded.pddl",
+            "map": "blocks_encoding_map.txt"
+        }
+    }
+]
+```
+
 ### Reproducible Stochastic Encoding
 
 Use a seed to make stochastic encoding reproducible (useful for testing):
@@ -146,6 +175,18 @@ Encoded domain file:
 )
 ```
 
+Original plan file (plan.pddl):
+```
+(pickup blockA)
+(stack blockA blockB)
+```
+
+Encoded plan file:
+```
+(x6 x14)
+(x11 x14 x15)
+```
+
 Encoding map (encoding_map.txt):
 ```
 blocks-world	x0
@@ -155,6 +196,9 @@ on	x3
 clear	x4
 handempty	x5
 pickup	x6
+stack	x11
+blockA	x14
+blockB	x15
 ```
 
 ## License
