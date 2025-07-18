@@ -21,18 +21,16 @@ from pddl_encoder import PDDLEncoder, PDDL_KEYWORDS
 def decode_pddl_string(encoded_string, encoding_map):
     """Decode an encoded PDDL string back to its original form using the encoding map."""
     # The encoding_map is already in the format {encoded: original}
-    import re
     
     # Start with the encoded string
-    decoded_string = encoded_string
     
     # Replace each encoded name with its original name
     # Sort by length in descending order to avoid partial replacements
-    for encoded, original in sorted(encoding_map.items(), key=lambda x: len(x[0]), reverse=True):
+    for original, encoded in encoding_map.items():
+        encoded_string = encoded_string.replace(encoded, original)
         # Use word boundaries to ensure we're replacing complete tokens
-        decoded_string = re.sub(r'\b' + re.escape(encoded) + r'\b', original, decoded_string)
     
-    return decoded_string
+    return encoded_string
 
 # Function to test reversibility
 def test_reversibility(json_file, encoded_data_file, encoding_maps_file):
@@ -70,30 +68,18 @@ def test_reversibility(json_file, encoded_data_file, encoding_maps_file):
             continue
         
         # Parse the encoding map
-        encoding_map = {}
-        for line in map_entry["encoding_map"].split('\n'):
-            if line.strip():
-                original, encoded = line.split('\t')
-                encoding_map[encoded] = original
+        encoding_map = map_entry["encoding_map"]
+
         
-        # Print the encoding map for debugging
-        print("Encoding map:")
-        for encoded, original in encoding_map.items():
-            print(f"  {encoded} -> {original}")
+
         
         # Decode the encoded PDDL strings
         decoded_domain = decode_pddl_string(encoded_entry["instruction"], encoding_map)
         decoded_problem = decode_pddl_string(encoded_entry["input"], encoding_map)
         decoded_plan = decode_pddl_string(encoded_entry["output"], encoding_map)
         
-        # Print a sample of the encoded and decoded domain for debugging
-        print("\nSample of encoded domain:")
-        print(encoded_entry["instruction"][:200] + "...")
-        print("\nSample of decoded domain:")
-        print(decoded_domain[:200] + "...")
-        print("\nSample of original domain:")
-        print(original_entry["instruction"][:200] + "...")
         
+
         # Compare with the original
         domain_match = decoded_domain.strip() == original_entry["instruction"].strip()
         problem_match = decoded_problem.strip() == original_entry["input"].strip()

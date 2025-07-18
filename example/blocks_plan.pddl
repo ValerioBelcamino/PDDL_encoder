@@ -1,6 +1,0 @@
-(pickup blockC)
-(putdown blockC)
-(pickup blockB)
-(stack blockB blockC)
-(pickup blockA)
-(stack blockA blockB)

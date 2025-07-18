@@ -97,7 +97,7 @@ def process_json_batch(json_file, output_dir, stochastic=False, seed=None):
         encoded_data.append(output_entry)
         encoding_maps.append({
             "entry_id": i,
-            "encoding_map": map_content
+            "encoding_map": encoder.encoding_map
         })
         
         print(f"Processed entry {i+1}")
